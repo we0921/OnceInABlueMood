@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BlueMood</string>
+
+    <!-- Create/Edit Entry Page -->
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_cancel">Cancel</string>
+
+    <string name="mood_selection">How are you?</string>
+
+    <string name="description_label">Description (Optional)</string>
+    <string name="description_hint">Description</string>
+
+    <string name="date_button_default_text">Date</string>
+    <string name="time_button_default_text">Time</string>
+    <string name="loc_button_default_text">Location</string>
+
+
+    <!-- Home Page -->
+    <string name="menu_add_entry">Add Entry</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+    <string name="theme_header">Theme</string>
+
+    <!-- Theme Preferences -->
+    <string name="theme_title">Use alternative color theme</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+</resources>
