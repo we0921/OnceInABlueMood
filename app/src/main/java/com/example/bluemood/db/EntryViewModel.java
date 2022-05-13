@@ -17,8 +17,8 @@ public class EntryViewModel extends AndroidViewModel {
         // Get the current year in string form
         int year = Calendar.getInstance().get(Calendar.YEAR);
         // Query the database using the year
-//        entries = EntryDatabase.getDatabase(getApplication()).entryDAO().getYear(year);
-        entries = EntryDatabase.getDatabase(getApplication()).entryDAO().getAll();
+        entries = EntryDatabase.getDatabase(getApplication()).entryDAO().getYear(year);
+//        entries = EntryDatabase.getDatabase(getApplication()).entryDAO().getAll();
     }
 
     public LiveData<List<Entry>> getEntries() {

@@ -30,11 +30,20 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    public int day;
+    public int month;
+    public int year;
     private EntryViewModel entryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // Initialize global date variables -- used for grouping entries in the same day
+        day = -1;
+        month = -1;
+        year = -1;
+
+        // Set theme based on sharedpreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean("theme", false)) {
             setTheme(R.style.Theme_BlueMood_Dark_NoBar);
@@ -46,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Preferences
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
-
 
         // Set the action bar
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -80,21 +88,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    // TODO - Create AddActivity class
     public class EntryListAdapter extends RecyclerView.Adapter<EntryListAdapter.EntryViewHolder> {
 
         class EntryViewHolder extends RecyclerView.ViewHolder {
             private final TextView entryTimeDate;
             private final TextView entryDesc;
             private final ImageView entryIcon;
+            private final TextView dateDividerText;
             private Entry entry;
 
             private EntryViewHolder(View itemView) {
                 super(itemView);
+
+                dateDividerText = itemView.findViewById(R.id.dateDivider);
                 entryTimeDate = itemView.findViewById(R.id.entryTimeDate);
                 entryDesc = itemView.findViewById(R.id.entryDesc);
                 entryIcon = itemView.findViewById(R.id.entryIcon);
+
 
                 itemView.setOnClickListener(view -> {
                     Intent intent = new Intent(MainActivity.this, AddActivity.class);
@@ -124,6 +134,28 @@ public class MainActivity extends AppCompatActivity {
                 Entry current = entries.get(position);
                 holder.entry = current;
                 Log.d("onBindViewHolder", "Setting holder for entry id " + holder.entry.id);
+
+                // Create grouping for entries within the same day
+                if (day == current.day && month == current.month && year == current.year) {
+                    ((TextView) holder.dateDividerText).setVisibility(View.GONE);
+                } else {
+                    // Update global date information
+                    year = current.year;
+                    month = current.month;
+                    day = current.day;
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, day);
+                    String dateString = "";
+                    dateString += calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.forLanguageTag("en"));
+                    dateString += ", ";
+                    dateString += calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.forLanguageTag("en")) + " ";
+                    dateString += day + ", ";
+                    dateString += year;
+
+                    ((TextView) holder.dateDividerText).setText(dateString);
+                    ((TextView) holder.dateDividerText).setVisibility(View.VISIBLE);
+                }
 
                 // Parse date & time
                 Calendar calendar = Calendar.getInstance();
@@ -186,8 +218,5 @@ public class MainActivity extends AppCompatActivity {
                 return entries.size();
             } else return 0;
         }
-
-
     }
-
 }
